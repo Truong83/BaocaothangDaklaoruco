@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo Infographic - Tháng 10/2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Thư viện Chart.js Plugin Datalabels để hiển thị số liệu trực tiếp trên điểm -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <style>
+        body {
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #1F2F36; /* Màu nền mới */
+            color: #E5E7EB; /* Font mặc định sáng */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .chart-container-sm {
+            position: relative;
+            width: 100%;
+            /* Do đã chia 50/50, max-width 400px không còn phù hợp, 
+               chỉ cần đảm bảo nó chiếm 100% của container 50% width */
+            margin-left: auto;
+            margin-right: auto;
+            height: 250px;
+            max-height: 300px;
+        }
+        @media (min-width: 768px) {
+            .chart-container-sm {
+                height: 300px;
+            }
+        }
+        /* Cập nhật style cho KPI Card */
+        .kpi-card {
+            background-color: #75B033; /* Màu accent chính cho KPI (Xanh lá) */
+            color: #FFF; /* Text trắng */
+            font-weight: 700; 
+        }
+        .kpi-value {
+            font-size: 2.25rem;
+            font-weight: 900; /* Rất đậm */
+            line-height: 1.2;
+            display: flex; /* Dùng flex để căn chỉnh giá trị và badge */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+        .kpi-label {
+            font-size: 0.875rem;
+            opacity: 1; 
+            font-weight: 800; /* Làm đậm nhãn */
+        }
+        .card-bg {
+            background-color: #2B3C44; /* Nền card tối, nổi hơn nền body một chút */
+        }
+        /* Style cho Indicator Badge (Nền trắng, chữ đậm, arrow) */
+        .indicator-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            margin-top: 4px;
+            border-radius: 9999px; /* rounded-full */
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 800;
+            background-color: #FFF; /* Nền trắng theo yêu cầu */
+            color: #1F2F36; /* Chữ tối trên nền trắng */
+            /* Thêm đổ bóng (Box Shadow) màu đậm hơn nền trang */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4); 
+        }
+        .up-arrow {
+            color: #4CAF50; /* Xanh lá sáng cho tăng */
+            margin-right: 2px;
+            font-weight: 900;
+        }
+        .down-arrow {
+            color: #D63030; /* Đỏ cho giảm */
+            margin-right: 2px;
+            font-weight: 900;
+        }
+    </style>
+</head>
+<body class="text-gray-100">
+
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-gray-50">Báo Cáo Hoạt Động Tháng 10/2025</h1>
+            <p class="text-xl text-gray-300 mt-2">Tổng quan về Hiệu suất Sản xuất, Tài chính và Vận hành</p>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            <!-- KPI 1: Sản Lượng Tháng 10 (Vượt KH) -->
+            <div class="kpi-card rounded-lg shadow-lg p-6 flex flex-col justify-center text-center">
+                <div class="kpi-value">
+                    111,76%
+                    <span class="indicator-badge">
+                        <span class="up-arrow">▲</span>
+                        +11,76%
+                    </span>
+                </div>
+                <div class="kpi-label">Sản Lượng Tháng 10/2025 (so với KH)</div>
+            </div>
+            <!-- KPI 2: Lợi Nhuận Trước Thuế (Vượt KH Năm) -->
+            <div class="kpi-card rounded-lg shadow-lg p-6 flex flex-col justify-center text-center">
+                <div class="kpi-value">
+                    120,2%
+                    <span class="indicator-badge">
+                        <span class="up-arrow">▲</span>
+                        +20,2%
+                    </span>
+                </div>
+                <div class="kpi-label">Lợi Nhuận Trước Thuế (Lũy kế 10T so với KH Năm)</div>
+            </div>
+            <!-- KPI 3: Đơn Giá Bán Bình Quân (Tăng so với cùng kỳ) -->
+            <div class="kpi-card rounded-lg shadow-lg p-6 flex flex-col justify-center text-center">
+                <div class="kpi-value">
+                    $1.790,78
+                    <span class="indicator-badge">
+                        <span class="up-arrow">▲</span>
+                        +10,83%
+                    </span>
+                </div>
+                <div class="kpi-label">Đơn Giá Bán Bình Quân (Tăng so với cùng kỳ)</div>
+            </div>
+        </section>
+
+        <!-- Bố cục chính: sử dụng grid 3 cột trên màn hình lớn (lg) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- HÀNG 1: Sản Lượng Tháng và Lũy Kế -->
+            <!-- Card 1 (lg:col-span-2): productionChart -->
+            <div class="lg:col-span-2 card-bg rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-50 mb-4">Sản Lượng Khai Thác Tháng 10/2025 (tấn)</h2>
+                <div class="chart-container">
+                    <canvas id="productionChart"></canvas>
+                </div>
+                <p class="mt-4 text-sm text-gray-300">Toàn công ty thực hiện được 2.224,31 tấn, đạt 111,76% kế hoạch tháng. Cả 04 Nông trường đều hoàn thành vượt mức kế hoạch được giao, thể hiện sự nỗ lực lớn của toàn hệ thống trong điều kiện thời tiết không thuận lợi.</p>
+            </div>
+
+            <!-- Card 2 (default 1 col): ytdProductionChart -->
+            <div class="card-bg rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-50 mb-4">Lũy Kế Kế Hoạch Năm 2025</h2>
+                <div class="chart-container-sm">
+                    <canvas id="ytdProductionChart"></canvas>
+                </div>
+                <p class="mt-4 text-sm text-gray-300">Tính đến hết tháng 10, công ty đã thực hiện được 10.240,58 tấn, đạt 75,86% kế hoạch năm (13.500 tấn). Đây là tiền đề quan trọng để hoàn thành mục tiêu cả năm trong giai đoạn cao điểm cuối năm.</p>
+            </div>
+            
+            <!-- HÀNG 2: BẢN HOÁN ĐỔI VỊ TRÍ (Sản Lượng Hàng Năm (2/3) & Tài Chính (1/3)) -->
+            
+            <!-- Card 3 (MỚI: 2/3 cột): Biểu đồ Sản Lượng Khai Thác Hàng Năm (LINE CHART - Đã được làm rộng) -->
+            <div class="lg:col-span-2 card-bg rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-50 mb-4">Sản Lượng Khai Thác Cao Su (2011 - 2025)</h2>
+                <!-- Dùng chart-container cho bố cục rộng 2/3 -->
+                <div class="chart-container">
+                    <canvas id="qualityChart"></canvas>
+                </div>
+                <p class="mt-4 text-sm text-gray-300">Biểu đồ minh họa chu kỳ phát triển của sản lượng mủ quy khô hàng năm, thể hiện sự tăng trưởng mạnh mẽ trong giai đoạn 2011-2017 (Đỉnh 18,480 tấn) và sau đó đi vào giai đoạn ổn định/suy giảm tự nhiên (10,207 tấn YTD 2025).</p>
+            </div>
+
+            <!-- Card 4 (MỚI: 1/3 cột): Biểu đồ Kết Quả Tài Chính Lũy Kế 10 Tháng (BAR CHART - Đã được làm hẹp) -->
+            <div class="card-bg rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-50 mb-4">Kết Quả Tài Chính Lũy Kế 10 Tháng (% KH Năm)</h2>
+                <!-- Dùng chart-container-sm cho bố cục hẹp 1/3 -->
+                <div class="chart-container-sm"> 
+                    <canvas id="financialChart"></canvas>
+                </div>
+                <p class="mt-4 text-sm text-gray-300">Kết quả kinh doanh hết sức tích cực. Dù sản lượng bán mới đạt 79,4% và doanh thu đạt 85% KH, lợi nhuận trước thuế đã vượt 20,2% KH năm. Điều này minh chứng cho hiệu quả của chiến lược bán hàng tối ưu giá và kiểm soát chi phí chặt chẽ (chi phí bán hàng chỉ sử dụng 50,4% KH).</p>
+            </div>
+            
+            <!-- Card 5 (default 1 col): profitCompositionChart -->
+            <div class="card-bg rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-50 mb-4">Cơ Cấu Lợi Nhuận Gộp 10 Tháng</h2>
+                <div class="chart-container-sm">
+                    <canvas id="profitCompositionChart"></canvas>
+                </div>
+                <p class="mt-4 text-sm text-gray-300">Lợi nhuận gộp đạt 143,96 tỷ Kíp. Trong đó, hoạt động khai thác cao su tự thân đóng góp 140,63 tỷ Kíp, chiếm tỷ trọng tuyệt đối, khẳng định hiệu quả của hoạt động kinh doanh cốt lõi.</p>
+            </div>
+
+            <!-- Card 6 (default 1 col): cultivationChart -->
+            <div class="card-bg rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-50 mb-4">Công Tác Chăm Sóc Vườn Cây (% Hoàn Thành)</h2>
+                <div class="chart-container-sm"> 
+                    <canvas id="cultivationChart"></canvas>
+                </div>
+                <p class="mt-4 text-sm text-gray-300">Phần lớn các hạng mục chăm sóc (KTCB, Điều, Sầu riêng) đều đạt 100% kế hoạch. Tuy nhiên, vườn cao su kinh doanh chỉ đạt 82,08% do mưa nhiều và công tác huy động nhân công chưa tốt, ảnh hưởng đến tiến độ làm cỏ và bôi vazoline.</p>
+            </div>
+            
+            <!-- Card 7 (default 1 col): hrChart -->
+            <div class="card-bg rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-50 mb-4">Tình Hình Nhân Sự Tháng 10</h2>
+                <div class="chart-container-sm">
+                    <canvas id="hrChart"></canvas>
+                </div>
+                <p class="mt-4 text-sm text-gray-300">Tình hình lao động có cải thiện khi tỷ lệ trống vườn giảm còn 1,45%. Tuy nhiên, tỷ lệ vắng cạo tăng lên 12,83% do ảnh hưởng của mưa bão và nghỉ lễ Bun. Tỷ lệ tham gia BHXH còn thấp (27,9%) là một vấn đề cần lưu ý.</p>
+            </div>
+
+            <!-- Card 8 (default 1 col): risk list -->
+            <div class="card-bg rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-50 mb-4">Các Vấn Đề Tồn Tại & Rủi Ro</h2>
+                <ul class="space-y-3 mt-4">
+                    <li class="flex items-center">
+                        <span class="text-red-500 text-2xl mr-3">●</span>
+                        <span class="text-gray-300"><strong>Trộm cắp mủ:</strong> Xảy ra 10 vụ, thu hồi 672 kg. Vấn đề phức tạp do có sự tiếp tay của các điểm thu mua trái phép.</span>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="text-[#C6C865] text-2xl mr-3">●</span>
+                        <span class="text-gray-300"><strong>XDCB chậm tiến độ:</strong> Hạng mục sân bê tông (40%) và pallet sắt (5%) bị chậm do thiếu nhân lực và vật tư.</span>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="text-[#C6C865] text-2xl mr-3">●
+                        <span class="text-gray-300"><strong>Thu mua ngoài:</strong> Chỉ đạt 72,46% KH tháng do cạnh tranh giá cao từ thị trường.</span>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="text-[#C6C865] text-2xl mr-3">●</span>
+                        <span class="text-gray-300"><strong>Phần mềm Workit:</strong> Module tính lương bị chậm tiến độ, ảnh hưởng đến kế hoạch trả lương.</span>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <script>
+        // Đăng ký plugin datalabels toàn cục (Chỉ cần làm một lần)
+        Chart.register(ChartDataLabels);
+
+        const brilliantGreens = ['#75B033', '#6A9B41', '#91A582', '#C6C865', '#4953A5'];
+        const accents = {
+            warning: '#C6C865', /* Light Olive/Yellow for warning */
+            danger: '#FF4D4D',
+            success: '#75B033'
+        };
+
+        function wrapLabel(str, maxWidth) {
+            if (str.length <= maxWidth) {
+                return str;
+            }
+            let lines = [];
+            let words = str.split(' ');
+            let currentLine = '';
+            for (let i = 0; i < words.length; i++) {
+                let word = words[i];
+                let testLine = currentLine.length > 0 ? currentLine + ' ' + word : word;
+                if (testLine.length > maxWidth) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = testLine;
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        const tooltipTitleCallback = function(tooltipItems) {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            } else {
+                return label;
+            }
+        };
+
+        const defaultChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    }
+                },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#E5E7EB' /* Màu chữ chú thích sáng */
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: '#9CA3AF' /* Màu chữ trục X */
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: '#374151', /* Màu lưới nhẹ trên nền tối */
+                    },
+                    ticks: {
+                        color: '#9CA3AF' /* Màu chữ trục Y */
+                    }
+                }
+            }
+        };
+        
+        const defaultPieOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    }
+                },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#E5E7EB'
+                    }
+                }
+            }
+        };
+
+        new Chart(document.getElementById('productionChart'), {
+            type: 'bar',
+            data: {
+                labels: ['NT1', 'NT2', 'NT3', 'NT4'],
+                datasets: [
+                    {
+                        label: 'Kế Hoạch',
+                        data: [534.90, 502.80, 567.40, 385.20],
+                        backgroundColor: brilliantGreens[2],
+                        borderColor: brilliantGreens[2],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Thực Hiện',
+                        data: [549.71, 622.57, 621.66, 430.38],
+                        backgroundColor: brilliantGreens[0],
+                        borderColor: brilliantGreens[0],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: defaultChartOptions
+        });
+
+        new Chart(document.getElementById('ytdProductionChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Đã Thực Hiện (75,86%)', 'Còn Lại'],
+                datasets: [{
+                    data: [10240.58, 13500.00 - 10240.58],
+                    backgroundColor: [brilliantGreens[1], brilliantGreens[3]],
+                    hoverOffset: 4
+                }]
+            },
+            options: defaultPieOptions
+        });
+
+        // Biểu đồ Sản Lượng Khai Thác Hàng Năm (Dạng Đường Cong + Data Labels)
+        // Đã chuyển sang vị trí 2/3 cột
+        new Chart(document.getElementById('qualityChart'), {
+            type: 'line', 
+            data: {
+                labels: ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025(10T)'],
+                datasets: [{
+                    label: 'Sản Lượng (tấn mủ quy khô)',
+                    // Dữ liệu sản lượng hàng năm (tấn) do người dùng cung cấp
+                    data: [107, 1820, 5654, 9316, 14282, 15832, 18480, 18139, 15403, 15206, 15439, 13953, 13852, 11116, 10207], 
+                    backgroundColor: 'rgba(117, 176, 51, 0.1)', // Màu xanh lá nhẹ cho khu vực dưới đường
+                    borderColor: brilliantGreens[0], // Màu xanh lá chính
+                    tension: 0.4, // Tạo độ cong cho đường (gần giống sin wave)
+                    pointRadius: 6, // Kích thước điểm lớn hơn
+                    pointBackgroundColor: brilliantGreens[0],
+                    fill: true,
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                plugins: {
+                    ...defaultChartOptions.plugins,
+                    tooltip: {
+                         // Tắt tooltip để chỉ hiển thị datalabel
+                        enabled: false 
+                    },
+                    datalabels: { // Cấu hình Data Labels
+                        align: 'top',
+                        color: '#E5E7EB',
+                        font: {
+                            weight: 'bold',
+                            size: 10
+                        },
+                        // Hiển thị giá trị nguyên, sử dụng toLocaleString để format số lớn (ví dụ: 18,480)
+                        formatter: (value) => value.toLocaleString('en-US'), 
+                    },
+                    legend: {
+                        display: false,
+                    }
+                },
+                scales: {
+                    ...defaultChartOptions.scales,
+                    y: {
+                        ...defaultChartOptions.scales.y,
+                        max: 20000, // Đặt giới hạn trên (hơn 18,480) để hình ảnh trực quan hơn
+                        ticks: {
+                            color: '#9CA3AF',
+                            callback: function(value) {
+                                // Format giá trị trục Y và thêm đơn vị tấn
+                                return value.toLocaleString('en-US') + ' tấn'; 
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Biểu đồ Kết Quả Tài Chính Lũy Kế 10 Tháng (% KH Năm)
+        // Đã chuyển sang vị trí 1/3 cột
+        new Chart(document.getElementById('financialChart'), {
+            type: 'bar',
+            data: {
+                labels: [
+                    wrapLabel('Doanh Thu Thuần', 16), 
+                    wrapLabel('Lợi Nhuận Gộp', 16), 
+                    wrapLabel('Lợi Nhuận Trước Thuế', 16)
+                ],
+                datasets: [
+                    {
+                        label: 'Kế Hoạch Năm',
+                        data: [100, 100, 100],
+                        backgroundColor: brilliantGreens[2],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Lũy Kế 10T Thực Hiện',
+                        data: [85, 101.2, 120.2],
+                        backgroundColor: brilliantGreens[0],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                ...defaultChartOptions,
+                scales: {
+                    ...defaultChartOptions.scales,
+                    y: {
+                        ...defaultChartOptions.scales.y,
+                        ticks: {
+                            color: '#9CA3AF',
+                            callback: function(value) {
+                                return value + '%'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('profitCompositionChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Cao su Khai thác', 'Cao su Mua ngoài', 'Hạt điều'],
+                datasets: [{
+                    data: [140.63, 2.59, 0.73],
+                    backgroundColor: [brilliantGreens[0], brilliantGreens[1], brilliantGreens[3]],
+                    hoverOffset: 4
+                }]
+            },
+            options: defaultPieOptions
+        });
+
+        new Chart(document.getElementById('cultivationChart'), {
+            type: 'bar',
+            data: {
+                labels: [
+                    wrapLabel('Vườn Cao su Kinh doanh', 16), 
+                    wrapLabel('Vườn Cao su KTCB', 16), 
+                    'Vườn Điều', 
+                    wrapLabel('Trồng mới Tái canh', 16), 
+                    'Sầu riêng'
+                ],
+                datasets: [{
+                    label: '% Hoàn Thành',
+                    data: [82.08, 100, 100, 98.90, 100],
+                    backgroundColor: [
+                        accents.warning, 
+                        brilliantGreens[0], 
+                        brilliantGreens[0], 
+                        brilliantGreens[1], 
+                        brilliantGreens[0]
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                plugins: {
+                    ...defaultChartOptions.plugins,
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    ...defaultChartOptions.scales,
+                    y: {
+                        ...defaultChartOptions.scales.y,
+                        ticks: {
+                            color: '#9CA3AF',
+                            callback: function(value) {
+                                return value + '%'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('hrChart'), {
+            type: 'bar',
+            data: {
+                labels: [
+                    wrapLabel('Tỷ lệ Trống vườn', 16), 
+                    wrapLabel('Tỷ lệ Vắng cạo', 16), 
+                    wrapLabel('Tỷ lệ tham gia BHXH', 16)
+                ],
+                datasets: [{
+                    label: 'Tỷ lệ (%)',
+                    data: [1.45, 12.83, 27.9],
+                    backgroundColor: [
+                        brilliantGreens[0], // Trống vườn (1.45% - Good/Low) -> Green
+                        accents.danger,     // Vắng cạo (12.83% - Bad/High) -> Red
+                        accents.warning     // BHXH (27.9% - Bad/Low coverage) -> Yellow
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                // Biểu đồ thanh đứng
+                ...defaultChartOptions,
+                plugins: {
+                    ...defaultChartOptions.plugins,
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        ...defaultChartOptions.scales.x,
+                        ticks: {
+                            color: '#9CA3AF'
+                        }
+                    },
+                    y: {
+                        ...defaultChartOptions.scales.y,
+                        ticks: {
+                            color: '#9CA3AF',
+                            callback: function(value) {
+                                return value + '%'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
